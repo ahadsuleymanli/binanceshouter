@@ -37,14 +37,15 @@ def clear():
 if __name__ == "__main__":
     prices_list = deque(maxlen=10)
 
-    gen = everynowandthen_generator(100)
+    history_gen = everynowandthen_generator(100)
+    shout_gen = everynowandthen_generator(60)
 
     while True:
         pair = "ADAUSDT"
         outstring = ""
         
         price = check_price(pair)
-        if next(gen):
+        if next(history_gen):
             prices_list.append(f"{datetime.datetime.now()}: {price}")
         for x in prices_list:
             outstring += x + "\n"
@@ -53,6 +54,7 @@ if __name__ == "__main__":
         clear()
         print(outstring)
 
-        handle_price(price, 1.7, pair)
+        if next(shout_gen):
+            handle_price(price, 1.7, pair)
 
         time.sleep(1)
