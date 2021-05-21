@@ -7,7 +7,7 @@ from playsound import playsound
 from collections import deque
 
 def check_price(pair: str = "ADAUSDT") -> float:
-    response = requests.get(f"https://api.binance.com/api/v3/avgPrice?symbol={pair}")
+    response = requests.get(f"https://api.binance.com/api/v3/ticker/price?symbol={pair}")
     price = float(response.json()["price"])
     # print(f"checked price for {pair}: {price}")
     return price
