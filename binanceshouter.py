@@ -13,13 +13,11 @@ def check_price(pair: str = "ADAUSDT") -> float:
     return price
 
 
-def handle_price(price: float, low_limit: float, pair: str) -> None:
-    if price < low_limit:
-        response(price, low_limit, pair)
+def decide_low_price(price: float, low_limit: float, pair: str) -> bool:
+    return price < low_limit
 
-def response(price, low_limit, pair):
+def response():
     playsound('you_suffer.mp3')
-    print(f"{datetime.datetime.now()}: {pair}: price: {price}")
 
 def everynowandthen_generator(every_x_secs: int = 100):
     secs_passed = -1
@@ -53,8 +51,8 @@ if __name__ == "__main__":
 
         clear()
         print(outstring)
-
-        if next(shout_gen):
-            handle_price(price, 1.7, pair)
-
+        
+        if decide_low_price(price, 1.65, pair) and next(shout_gen):
+            response()
+        
         time.sleep(1)
